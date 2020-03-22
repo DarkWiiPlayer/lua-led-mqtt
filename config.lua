@@ -1,8 +1,10 @@
-local name = require 'name'
+local json = require 'sjson'
 
-return {
-	name = name;
-	broker = { ip = '10.0.0.2', port = 1883 };
-	topics = { "led", "led/"..name };
-	ledcount = 5;
-}
+local f = assert(file.open("config.json"))
+local config = f:read(1024*8)
+f:close()
+
+print(config)
+config = json.decode(config)
+
+return config
