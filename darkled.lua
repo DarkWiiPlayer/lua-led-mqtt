@@ -61,6 +61,21 @@ function commands.wave(data)
 	end)
 end
 
+function commands.rainbow(data)
+	local color = require 'color_utils'
+	local inv_steps = 1 / 360
+	local t = data.duration * inv_steps
+	local angle = 0
+	timer:set(t*1e3, function()
+		while true do
+			angle = (angle + 1) % 360
+			buffer:fill(color.colorWheel(math.floor(angle)))
+			ws2812.write(buffer)
+			coroutine.yield()
+		end
+	end)
+end
+
 return function(data)
 	if config.path and data.path and config.path:find(data.path)~=1 then
 		return true, "Wrong device path, skipping"
