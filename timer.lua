@@ -22,7 +22,10 @@ function timer:set(time, fn, done)
 	local co = coroutine.create(fn)
 	t:register(math.floor(time), tmr.ALARM_AUTO, function()
 		if coroutine.status(co) == 'suspended' then
-			assert(coroutine.resume(co))
+			local ok, message = coroutine.resume(co)
+			if not ok then
+				print("Error in timer: "..message)
+			end
 		end
 		if coroutine.status(co) == 'dead' then
 			t:unregister()

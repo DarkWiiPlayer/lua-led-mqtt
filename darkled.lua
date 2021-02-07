@@ -82,5 +82,7 @@ return function(data)
 	end
 	if commands[data.command] then
 		return commands[data.command](data)
+	else
+		print("Unknown command: "..data.commands)
 	end
 end
