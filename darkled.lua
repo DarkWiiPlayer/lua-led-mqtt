@@ -14,9 +14,9 @@ ws2812.write(buffer)
 local function interpolate(from, to, value, max)
 	if max then value = value/max end
 	return
-		from[1] + (to[1]-from[1])*value,
-		from[2] + (to[2]-from[2])*value,
-		from[3] + (to[3]-from[3])*value
+		math.floor(from[1] + (to[1]-from[1])*value),
+		math.floor(from[2] + (to[2]-from[2])*value),
+		math.floor(from[3] + (to[3]-from[3])*value)
 end
 
 local commands = {}

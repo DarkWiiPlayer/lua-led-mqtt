@@ -20,9 +20,9 @@ function timer:set(time, fn, done)
 	local t = self.timer
 	self:stop()
 	local co = coroutine.create(fn)
-	t:register(time, tmr.ALARM_AUTO, function()
+	t:register(math.floor(time), tmr.ALARM_AUTO, function()
 		if coroutine.status(co) == 'suspended' then
-			coroutine.resume(co)
+			assert(coroutine.resume(co))
 		end
 		if coroutine.status(co) == 'dead' then
 			t:unregister()
