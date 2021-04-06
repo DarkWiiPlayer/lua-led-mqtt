@@ -21,6 +21,7 @@ return function(num_leds)
 			if data.protocol == 'darkled' then
 				darkled(data)
 			end
+			collectgarbage()
 		end)
 	end, function(client, reason)
 		print("Could not connect: ", reason)
