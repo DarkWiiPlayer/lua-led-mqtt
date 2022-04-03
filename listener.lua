@@ -23,6 +23,9 @@ return function(num_leds)
 			end
 			collectgarbage()
 		end)
+
+		client:on('connfail', node.restart)
+		client:on('offline', node.restart)
 	end, function(client, reason)
 		print("Could not connect: ", reason)
 	end)
