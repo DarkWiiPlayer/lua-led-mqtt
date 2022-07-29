@@ -61,6 +61,27 @@ function commands.wave(data)
 	end)
 end
 
+function commands.wheel(data)
+	local wait_next_frame = coroutine.yield
+	local t = 50e-3
+	local from = {0, 0, 0}
+	timer:set(t*1e3, function()
+		while true do
+			for i, to in ipairs(data.stops) do
+				to = switch_rg(to)
+				print("Interpolating to stop #"..tostring(i))
+				local ticks = (data.duration / #data.stops) / t
+				for i=1,ticks do
+					buffer:fill(interpolate(from, to, i, ticks))
+					ws2812.write(buffer)
+					wait_next_frame()
+				end
+				from = to
+			end
+		end
+	end)
+end
+
 function commands.rainbow(data)
 	local color = require 'color_utils'
 	local inv_steps = 1 / 360
